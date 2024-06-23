@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Detail Page</h1>
+  <div class="container mt-5">
+    <h1 class="mb-4">Detail Page</h1>
     <p>Item ID: {{ itemId }}</p>
   </div>
 </template>
