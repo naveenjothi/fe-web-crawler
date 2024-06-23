@@ -10,23 +10,19 @@
 import { defineComponent } from "vue";
 import axios from "axios";
 import { useRoute } from "vue-router";
-
-interface Item {
-  id: number;
-  companyName: string;
-}
+import { IClient } from "../models/client.model";
 
 export default defineComponent({
   data() {
     return {
-      item: null as Item | null,
+      item: null as IClient | null,
     };
   },
   async mounted() {
     const route = useRoute();
     const itemId = route.params.id as string;
     try {
-      const response = await axios.get(`/api/clients/${itemId}`);
+      const response = await axios.get<IClient>(`/api/clients/${itemId}`);
       this.item = response.data;
     } catch (error) {
       console.error("Error fetching item details:", error);
