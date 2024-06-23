@@ -11,6 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import axios from "axios";
 
 interface Item {
   id: number;
@@ -20,12 +21,16 @@ interface Item {
 export default defineComponent({
   data() {
     return {
-      items: [
-        { id: 1, name: "Item 1" },
-        { id: 2, name: "Item 2" },
-        { id: 3, name: "Item 3" },
-      ] as Item[],
+      items: [] as Item[],
     };
+  },
+  async mounted() {
+    try {
+      const response = await axios.get(`/api/clients?q=""`);
+      this.items = response.data;
+    } catch (error) {
+      console.error("Error fetching items:", error);
+    }
   },
 });
 </script>
