@@ -5,12 +5,6 @@
       disabled ? 'select-none pointer-events-none cursor-not-allowed' : '',
     ]"
   >
-    <label
-      v-if="label"
-      class="text-xs font-semibold text-uppercase text-current mb-0"
-    >
-      {{ label }}
-    </label>
     <div class="form-check form-switch">
       <input
         :id="id"
@@ -42,11 +36,6 @@ const props = defineProps({
     type: Boolean as PropType<boolean>,
     required: false,
     default: false,
-  },
-  label: {
-    type: String as PropType<string>,
-    required: true,
-    default: "",
   },
 });
 

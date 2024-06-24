@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5">
-    <h1 class="mb-4">List Page</h1>
+    <h1 class="mb-4">Companies List</h1>
     <div class="mb-2">
       <div class="relative">
         <input
@@ -59,23 +59,51 @@
                     class="position-relative"
                     @mouseenter="selectedRow = data.cin"
                     @mouseleave="selectedRow = ''"
-                    @click.prevent="redirectTo(data?.id)"
                   >
-                    <span
-                      v-if="
-                        selectedRow == data?.cin && columns.length - 1 === idx
-                      "
-                      class="position-absolute end-0 text-primary cursor-pointer text-small"
-                    >
-                      Go to <i class="pi pi-arrow-right"></i>
-                    </span>
                     <SwitchComponent
-                      v-else-if="col.key == 'companyStatus'"
+                      v-if="col.key == 'companyStatus'"
                       :value="data[col.key] == 'ACTIVE'"
                       :disabled="true"
+                      label="Status"
                       class="text-gray-700 flex gap-2 items-center justify-between w-full"
                     />
-                    <span v-else>{{ data[col.key] }}</span>
+                    <router-link
+                      v-else-if="col.key == 'companyName'"
+                      :to="'/detail/' + data.id"
+                      class="text-black no-underline"
+                    >
+                      <div
+                        class="d-inline-flex flex-column align-items-start flex-grow-1"
+                      >
+                        <div
+                          class="small font-weight-semibold text-dark mb-1"
+                          style="line-height: 1"
+                        >
+                          {{ getStartCase(data[col.key]) }}
+                        </div>
+                        <div class="d-inline-flex align-items-center">
+                          <div class="small font-weight-medium text-muted">
+                            <img
+                              src="/src/assets/building.png"
+                              height="22"
+                              width="22"
+                              style="margin-right: 6px"
+                            />
+                          </div>
+                          <div class="small font-weight-medium text-muted">
+                            {{ getStartCase(data["state"]) }},
+                            {{ getStartCase(data["country"]) }}
+                          </div>
+                        </div>
+                      </div>
+                    </router-link>
+                    <router-link
+                      v-else
+                      :to="'/detail/' + data.id"
+                      class="small text-black no-underline"
+                    >
+                      <span>{{ data[col.key] }}</span>
+                    </router-link>
                   </div>
                 </template>
               </Column>
@@ -110,9 +138,7 @@ import Paginator from "primevue/paginator";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import SwitchComponent from "../components/SwitchComponent.vue";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
+import { startCase } from "lodash";
 
 export default defineComponent({
   components: {
@@ -132,12 +158,10 @@ export default defineComponent({
       loading: false,
       columns: [
         { title: "Status", key: "companyStatus" },
-        { title: "Company Name", key: "companyName", sortable: false },
+        { title: "Name", key: "companyName", sortable: false },
         { title: "CIN", key: "cin" },
-        { title: "Company Class", key: "companyClass" },
+        { title: "Class", key: "companyClass" },
         { title: "Email", key: "email" },
-        { title: "Company Category", key: "category" },
-        { title: "Company SubCategory", key: "subCategory" },
       ],
     };
   },
@@ -179,14 +203,8 @@ export default defineComponent({
     rowClass(data: any) {
       return this.selectedRow === data.cin ? "table-active" : "";
     },
-    updateCurrentMax(max: number) {
-      this.itemsPerPage = max;
-      // this.fetchItems();
-    },
-    redirectTo(itemId: string) {
-      console.log("ite", itemId);
-
-      router.push(`/details/${itemId}`);
+    getStartCase(value: string) {
+      return startCase(value.toLowerCase());
     },
   },
   async mounted() {
@@ -215,5 +233,8 @@ export default defineComponent({
 }
 .text-small {
   font-size: 0.875rem;
+}
+.no-underline {
+  text-decoration: none;
 }
 </style>
