@@ -217,6 +217,11 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.5.tgz#a6ce3e556e00fd9895dd872dd172ad0d4bd687f4"
   integrity sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==
 
+"@types/lodash@^4.17.5":
+  version "4.17.5"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.5.tgz#e6c29b58e66995d57cd170ce3e2a61926d55ee04"
+  integrity sha512-MBIOHVZqVqgfro1euRDWX7OO0fBVUUMrN6Pwm8LQsz8cWhEpihlvR70ENj3f40j58TNxZaWv2ndSkInykNBBJw==
+
 "@types/node@^20.14.8":
   version "20.14.8"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.14.8.tgz#45c26a2a5de26c3534a9504530ddb3b27ce031ac"
@@ -229,24 +234,24 @@
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-5.0.5.tgz#e3dc11e427d4b818b7e3202766ad156e3d5e2eaa"
   integrity sha512-LOjm7XeIimLBZyzinBQ6OSm3UBCNVCpLkxGC0oWmm2YPzVZoxMsdvNVimLTBzpAnR9hl/yn1SHGuRfe6/Td9rQ==
 
-"@volar/language-core@2.3.1", "@volar/language-core@~2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@volar/language-core/-/language-core-2.3.1.tgz#0968218ca3210b9d1151b44ac0ad6944562ce3bc"
-  integrity sha512-25CZ3ulM6jWgQsPQjKb7maKDlryvXWvsl7ytw4uj1Yyy17BgdiTWqMuNSxIODC3+/7IBOOGYoINC/1OOLACLLw==
+"@volar/language-core@2.3.3", "@volar/language-core@~2.3.1":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@volar/language-core/-/language-core-2.3.3.tgz#d253a728384eee9ce02fd44d68a0fec998295b5f"
+  integrity sha512-Blu4NQaRszEsgK/QvWFRSQPRAhPDbYef+peFV9Gb86swxRCs01q7h673/HYstaPsTbjh/F5mXjozoOFxQ8tLYw==
   dependencies:
-    "@volar/source-map" "2.3.1"
+    "@volar/source-map" "2.3.3"
 
-"@volar/source-map@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@volar/source-map/-/source-map-2.3.1.tgz#3404ef0f9f9b53bffc253c2345566f64a998d3d8"
-  integrity sha512-fU3IL19wRy5S5OaGq67ejSl+/xdMuOHgp9Rsp3OiOhLyg25CctLYDdGZ9Y3+MJ1iqTLDh94PdvdR1BZX6I0hNQ==
+"@volar/source-map@2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@volar/source-map/-/source-map-2.3.3.tgz#1c1291c35fd73d1cf0e938dd03728441b68baf63"
+  integrity sha512-eFRHA13hxiGPt+Xa0EX3yNd50ozctnW5KzQj/IllKmSK/KuBEkSAsIhBdOxCpv1YhV4GmI3iKG9peOs6k9LtnA==
 
 "@volar/typescript@~2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@volar/typescript/-/typescript-2.3.1.tgz#ffdbd361844ad9b3b6f45a4a173b3d384385792e"
-  integrity sha512-OrUV6dYt/1h92+aWElexra6dp++gF/IEddvwyxeobyYfKAoKDUMsWU0iJCj0clZlfdyYaLmNEAkulJlVimxnOw==
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@volar/typescript/-/typescript-2.3.3.tgz#098dd2e2a9634acff584004bf4ff8957419612be"
+  integrity sha512-cwGMSwqIR54Hngu5dYmUJPHFpo6KGj7BlpwT2G9WTKwEjFlH4g/0IPeq064428DAi/VMP42vqAQSBiEHi5Gc4A==
   dependencies:
-    "@volar/language-core" "2.3.1"
+    "@volar/language-core" "2.3.3"
     path-browserify "^1.0.1"
     vscode-uri "^3.0.8"
 
@@ -470,6 +475,11 @@ he@^1.2.0:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
+lodash@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+
 magic-string@^0.30.10:
   version "0.30.10"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.10.tgz#123d9c41a0cb5640c892b041d4cfb3bd0aa4b39e"
@@ -524,6 +534,16 @@ postcss@^8.4.38:
     nanoid "^3.3.7"
     picocolors "^1.0.0"
     source-map-js "^1.2.0"
+
+primeicons@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/primeicons/-/primeicons-5.0.0.tgz#73a0b6028a77c58a9eeb331ad13aaf085e8451ee"
+  integrity sha512-heygWF0X5HFI1otlZE62pp6ye7sZ8om78J9au2BRkg8O7Y8AHTZ9qKMRzchZUHLe8zUAvdi6hZzzm9XxgwIExw==
+
+primevue@^3.26.0:
+  version "3.52.0"
+  resolved "https://registry.yarnpkg.com/primevue/-/primevue-3.52.0.tgz#819d1d70fe37cea7dcd06076b7c3cd9ee4e3c6a4"
+  integrity sha512-HLOVP5YI0ArFKUhIyfZsWmTNMaBYNCBWC/3DYvdd/Po4LY5/WXf7yIYvArE2q/3OuwSXJXvjlR8UNQeJYRSQog==
 
 proxy-from-env@^1.1.0:
   version "1.1.0"
