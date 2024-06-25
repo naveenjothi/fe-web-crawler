@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column w-100 justify-content-between h-100 my-2">
-    <div class="w-50 d-flex gap-2">
+    <div :class="wrapperClasses">
       <InputComponent
         v-model="data.companyName"
         label="Company Name"
@@ -14,7 +14,7 @@
         wrapper-class="w-50"
       />
     </div>
-    <div class="w-50 d-flex gap-2">
+    <div :class="wrapperClasses">
       <InputComponent
         v-model="data.cin"
         label="CIN"
@@ -29,7 +29,7 @@
         v-model="data.companyClass"
       />
     </div>
-    <div class="w-50 d-flex gap-2">
+    <div :class="wrapperClasses">
       <InputComponent
         v-model="data.category"
         label="Category"
@@ -43,7 +43,7 @@
         v-model="data.subCategory"
       />
     </div>
-    <div class="w-50 d-flex gap-2">
+    <div :class="wrapperClasses">
       <InputComponent
         v-model="data.companyStatus"
         label="Company Status"
@@ -57,14 +57,15 @@
         wrapper-class="w-50"
       />
     </div>
-    <div class="w-50">
+    <div :class="wrapperClasses">
       <InputComponent
         v-model="data.registrationDate"
         label="Registration Date"
         id="registrationDate"
+        wrapper-class="w-100"
       />
     </div>
-    <div class="w-50 d-flex gap-2">
+    <div :class="wrapperClasses">
       <InputComponent
         label="Address"
         wrapper-class="w-75"
@@ -79,7 +80,7 @@
         v-model="data.pinCode"
       />
     </div>
-    <div class="w-50 d-flex gap-2">
+    <div :class="wrapperClasses">
       <InputComponent
         label="State"
         wrapper-class="w-50"
@@ -93,10 +94,15 @@
         v-model="data.country"
       />
     </div>
-    <div class="w-50">
-      <InputComponent label="Managed By" id="email" v-model="data.email" />
+    <div :class="wrapperClasses">
+      <InputComponent
+        label="Managed By"
+        id="email"
+        v-model="data.email"
+        wrapper-class="w-100"
+      />
     </div>
-    <div class="w-50 d-flex gap-2">
+    <div :class="wrapperClasses">
       <InputComponent
         label="Authorized Capital"
         wrapper-class="w-50"
@@ -172,6 +178,11 @@ const rules = computed(() => {
     companyClass: { required },
   };
 });
+
+const wrapperClasses = computed(() => [
+  props.componentType === "create" ? "w-100" : "w-50",
+  "d-flex gap-2",
+]);
 
 const v$ = useVuelidate(rules, data);
 

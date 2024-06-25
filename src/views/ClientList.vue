@@ -143,17 +143,10 @@
   <Dialog
     v-model:visible="visible"
     modal
-    header="Edit Profile"
+    header="Add Client"
     :style="{ width: '50rem' }"
   >
-    <span class="text-surface-500 dark:text-surface-400 block mb-8"
-      >Update your information.</span
-    >
-    <FormComponent
-      :data="{}"
-      :component-type="'create'"
-      @on-success="handleSuccess"
-    />
+    <FormComponent component-type="create" @on-success="handleSuccess" />
   </Dialog>
   <Toast />
 </template>
@@ -169,9 +162,25 @@ import SwitchComponent from "../components/SwitchComponent.vue";
 import { startCase } from "lodash";
 import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
+import ButtonComponent from "../components/ButtonComponent.vue";
+import Dialog from "primevue/dialog";
+import InputText from "primevue/inputtext";
+import Button from "primevue/button";
+import FormComponent from "../components/details/FormComponent.vue";
 const toast = useToast();
 
-defineComponent([SwitchComponent, DataTable, Paginator, Column]);
+defineComponent([
+  Paginator,
+  DataTable,
+  Column,
+  SwitchComponent,
+  ButtonComponent,
+  Dialog,
+  InputText,
+  Button,
+  FormComponent,
+  Toast,
+]);
 
 onMounted(async () => {
   await fetchItems(searchQuery.value, currentPage.value - 1);
