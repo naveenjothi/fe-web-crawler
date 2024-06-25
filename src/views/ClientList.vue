@@ -67,6 +67,12 @@
                       label="Status"
                       class="text-gray-700 flex gap-2 items-center justify-between w-full"
                     />
+                    <div
+                      v-else-if="col.key == 'action'"
+                      class="d-flex align-items-center justify-content-center"
+                    >
+                      <i class="pi pi-trash"></i>
+                    </div>
                     <router-link
                       v-else-if="col.key == 'companyName'"
                       :to="'/detail/' + data.id"
@@ -162,6 +168,7 @@ export default defineComponent({
         { title: "CIN", key: "cin" },
         { title: "Class", key: "companyClass" },
         { title: "Email", key: "email" },
+        { title: "Actions", key: "action" },
       ],
     };
   },
