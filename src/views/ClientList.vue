@@ -71,7 +71,10 @@
                       v-else-if="col.key == 'action'"
                       class="d-flex align-items-center justify-content-center"
                     >
-                      <i class="pi pi-trash"></i>
+                      <i
+                        class="pi pi-trash"
+                        @click.prevent="handleDelete(data.id)"
+                      ></i>
                     </div>
                     <router-link
                       v-else-if="col.key == 'companyName'"
@@ -134,10 +137,11 @@
       </div>
     </div>
   </div>
+  <Toast />
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup>
+import { defineComponent, onMounted, ref, computed } from "vue";
 import axios from "axios";
 import { IClient } from "../models/client.model";
 import Paginator from "primevue/paginator";
@@ -145,79 +149,102 @@ import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import SwitchComponent from "../components/SwitchComponent.vue";
 import { startCase } from "lodash";
+import { useToast } from "primevue/usetoast";
+import Toast from "primevue/toast";
+const toast = useToast();
 
-export default defineComponent({
-  components: {
-    Paginator,
-    DataTable,
-    Column,
-    SwitchComponent,
-  },
-  data() {
-    return {
-      items: [] as IClient[],
-      searchQuery: "",
-      currentPage: 1,
-      itemsPerPage: 10,
-      totalCount: 0,
-      selectedRow: "",
-      loading: false,
-      columns: [
-        { title: "Status", key: "companyStatus" },
-        { title: "Name", key: "companyName", sortable: false },
-        { title: "CIN", key: "cin" },
-        { title: "Class", key: "companyClass" },
-        { title: "Email", key: "email" },
-        { title: "Actions", key: "action" },
-      ],
-    };
-  },
-  computed: {
-    totalPages(): number {
-      return Math.ceil(this.totalCount / this.itemsPerPage);
-    },
-  },
-  methods: {
-    async fetchItems(query: string, page: number) {
-      try {
-        this.loading = true;
-        const params = {
-          q: query,
-          page: page.toString(),
-          size: this.itemsPerPage.toString(),
-        };
-        const urlParams = new URLSearchParams(params);
-        const queryString = urlParams.toString();
-        const response = await axios.get(`/api/clients?${queryString}`);
-        this.items = response.data?.items ?? [];
-        this.totalCount = response.data?.count ?? 0;
-      } catch (error) {
-        console.error("Error fetching items:", error);
-      } finally {
-        this.loading = false;
-      }
-    },
-    changePage(meta: { page: number }) {
-      const { page } = meta;
-      if (page > 0 && page <= this.totalPages) {
-        this.currentPage = page;
-        this.fetchItems("", page - 1);
-      }
-    },
-    onInputChange() {
-      this.fetchItems(this.searchQuery, 0);
-    },
-    rowClass(data: any) {
-      return this.selectedRow === data.cin ? "table-active" : "";
-    },
-    getStartCase(value: string) {
-      return startCase(value.toLowerCase());
-    },
-  },
-  async mounted() {
-    this.fetchItems(this.searchQuery, this.currentPage - 1);
-  },
+defineComponent([SwitchComponent, DataTable, Paginator, Column]);
+
+onMounted(async () => {
+  await fetchItems(searchQuery.value, currentPage.value - 1);
 });
+
+const searchQuery = ref<string>("");
+const currentPage = ref<number>(1);
+const itemsPerPage = ref<number>(10);
+const loading = ref<boolean>(false);
+const items = ref<IClient[]>([]);
+const totalCount = ref<number>(0);
+const selectedRow = ref<string>("");
+
+const columns = computed(() => [
+  { title: "Status", key: "companyStatus" },
+  { title: "Name", key: "companyName", sortable: false },
+  { title: "CIN", key: "cin" },
+  { title: "Class", key: "companyClass" },
+  { title: "Email", key: "email" },
+  { title: "Actions", key: "action" },
+]);
+
+const fetchItems = async (query: string, page: number) => {
+  try {
+    loading.value = true;
+    const params = {
+      q: query,
+      page: page.toString(),
+      size: itemsPerPage.value.toString(),
+    };
+    const urlParams = new URLSearchParams(params);
+    const queryString = urlParams.toString();
+    const response = await axios.get(`/api/clients?${queryString}`);
+    items.value = response.data?.items ?? [];
+    totalCount.value = response.data?.count ?? 0;
+  } catch (error: any) {
+    console.error("Error fetching items:", error);
+    toast.add({
+      severity: "error",
+      summary: "Failed Fetching Records",
+      detail: error?.message,
+      life: 3000,
+    });
+  } finally {
+    loading.value = false;
+  }
+};
+
+const getStartCase = (value: string) => {
+  return startCase(value.toLowerCase());
+};
+
+const rowClass = (data: any) => {
+  return selectedRow.value === data.cin ? "table-active" : "";
+};
+
+const totalPages = computed(() =>
+  Math.ceil(totalCount.value / itemsPerPage.value)
+);
+
+const changePage = (meta: { page: number }) => {
+  const { page } = meta;
+  if (page > 0 && page <= totalPages.value) {
+    currentPage.value = page;
+    fetchItems("", page - 1);
+  }
+};
+
+const onInputChange = () => {
+  fetchItems(searchQuery.value, 0);
+};
+
+const handleDelete = async (itemId: string) => {
+  try {
+    await axios.delete(`/api/clients/${itemId}`);
+    toast.add({
+      severity: "success",
+      summary: "Success Message",
+      detail: "Successfully deleted!",
+      life: 3000,
+    });
+    await fetchItems("", 0);
+  } catch (error: any) {
+    toast.add({
+      severity: "error",
+      summary: "Delete Failed",
+      detail: error?.message,
+      life: 3000,
+    });
+  }
+};
 </script>
 
 <style scoped>
