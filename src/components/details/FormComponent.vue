@@ -127,7 +127,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineEmits, toRefs, PropType, computed } from "vue";
+import { toRefs, PropType, computed } from "vue";
 import { IClient } from "../../models/client.model";
 import InputComponent from "../InputComponent.vue";
 import ButtonComponent from "../ButtonComponent.vue";
