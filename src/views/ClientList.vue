@@ -1,6 +1,9 @@
 <template>
   <div class="container mt-5">
     <h1 class="mb-4">Companies List</h1>
+    <ButtonComponent label="Show" @click="handleShowForm"
+      >Create List</ButtonComponent
+    >
     <div class="mb-2">
       <div class="relative">
         <input
@@ -137,6 +140,21 @@
       </div>
     </div>
   </div>
+  <Dialog
+    v-model:visible="visible"
+    modal
+    header="Edit Profile"
+    :style="{ width: '50rem' }"
+  >
+    <span class="text-surface-500 dark:text-surface-400 block mb-8"
+      >Update your information.</span
+    >
+    <FormComponent
+      :data="{}"
+      :component-type="'create'"
+      @on-success="handleSuccess"
+    />
+  </Dialog>
   <Toast />
 </template>
 
@@ -163,6 +181,7 @@ const searchQuery = ref<string>("");
 const currentPage = ref<number>(1);
 const itemsPerPage = ref<number>(10);
 const loading = ref<boolean>(false);
+const visible = ref<boolean>(false);
 const items = ref<IClient[]>([]);
 const totalCount = ref<number>(0);
 const selectedRow = ref<string>("");
@@ -244,6 +263,20 @@ const handleDelete = async (itemId: string) => {
       life: 3000,
     });
   }
+};
+
+const handleShowForm = () => {
+  visible.value = true;
+};
+
+const handleSuccess = () => {
+  visible.value = false;
+  toast.add({
+    severity: "success",
+    summary: "Success Message",
+    detail: "Successfully created!",
+    life: 3000,
+  });
 };
 </script>
 

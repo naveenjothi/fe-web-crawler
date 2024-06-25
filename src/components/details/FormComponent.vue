@@ -2,34 +2,52 @@
   <div class="d-flex flex-column w-100 justify-content-between h-100 my-2">
     <div class="w-50">
       <InputComponent
+        v-model="data.companyName"
         label="Company Name"
         id="companyName"
-        v-model="data.companyName"
+      />
+      <InputComponent v-model="data.roC" label="roC" id="roC" />
+    </div>
+    <div class="w-50">
+      <InputComponent
+        v-model="data.companyStatus"
+        label="Company Status"
+        id="companyStatus"
+      />
+      <InputComponent
+        v-model="data.companyActivity"
+        label="Company Activity"
+        id="companyActivity"
+      />
+    </div>
+    <div class="w-50">
+      <InputComponent
+        v-model="data.registrationDate"
+        label="Registration Date"
+        id="registrationDate"
       />
     </div>
     <div class="w-50 d-flex gap-2">
       <InputComponent
+        v-model="data.cin"
         label="CIN"
         wrapper-class="w-50"
         id="cin"
         :disabled="componentType == 'edit'"
-        v-model="data.cin"
       />
       <InputComponent
-        label="ROC"
+        label="Company Class"
+        id="companyClass"
         wrapper-class="w-50"
-        type="number"
-        id="roC"
-        v-model="data.roC"
+        v-model="data.companyClass"
       />
     </div>
-
     <div class="w-50 d-flex gap-2">
       <InputComponent
+        v-model="data.category"
         label="Category"
         wrapper-class="w-50"
         id="category"
-        v-model="data.category"
       />
       <InputComponent
         label="Sub Category"
@@ -39,17 +57,12 @@
       />
     </div>
     <div class="w-50 d-flex gap-2">
+      <InputComponent label="Address" id="address" v-model="data.address" />
       <InputComponent
-        label="Address"
-        id="address"
-        v-model="data.address"
-        wrapper-class="w-75"
-      />
-      <InputComponent
-        label="Pin Code"
-        wrapper-class="w-25"
+        label="Pincode"
+        id="pincode"
         type="number"
-        id="pinCode"
+        wrapper-class="w-50"
         v-model="data.pinCode"
       />
     </div>
@@ -86,21 +99,6 @@
         v-model="data.paidUpCapital"
       />
     </div>
-    <div class="w-50 d-flex gap-2">
-      <InputComponent
-        label="Company Class"
-        id="companyClass"
-        wrapper-class="w-50"
-        v-model="data.companyClass"
-      />
-      <InputComponent
-        label="Registration Date"
-        id="registrationDate"
-        type="number"
-        wrapper-class="w-50"
-        v-model="data.registrationDate"
-      />
-    </div>
     <div class="w-50 d-flex justify-content-end">
       <ButtonComponent class="w-25 rounded" @click.prevent="handleSave"
         >Save</ButtonComponent
@@ -108,24 +106,25 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
-import { PropType, defineComponent, toRefs } from "vue";
+import { defineProps, defineEmits, toRefs, PropType, computed } from "vue";
 import { IClient } from "../../models/client.model";
 import InputComponent from "../InputComponent.vue";
 import ButtonComponent from "../ButtonComponent.vue";
 import axios from "axios";
 import { useRoute } from "vue-router";
 
-defineComponent([InputComponent, ButtonComponent]);
+import { useVuelidate } from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 
 const emit = defineEmits(["on-success"]);
-
 const route = useRoute();
 
 const props = defineProps({
   data: {
     type: Object as PropType<IClient>,
-    default: {
+    default: () => ({
       companyName: "",
       cin: "",
       companyClass: "",
@@ -142,7 +141,7 @@ const props = defineProps({
       companyActivity: "",
       registrationDate: "",
       pinCode: "",
-    },
+    }),
   },
   componentType: {
     type: String,
@@ -153,15 +152,29 @@ const props = defineProps({
 
 const { data, componentType } = toRefs(props);
 
+const rules = computed(() => {
+  return {
+    companyName: { required },
+    cin: { required },
+    companyClass: { required },
+  };
+});
+
+const v$ = useVuelidate(rules, data);
+
 const handleSave = async () => {
-  const itemId = route.params.id as string;
-  const payload = { ...data.value };
-  if (componentType.value == "edit") {
-    delete payload.id;
-    await axios.post(`/api/clients/${itemId}`, { input: payload });
-  } else {
-    await axios.post(`/api/clients/`, { input: payload });
+  console.log(v$, "## v dollar");
+  try {
+    const payload = { ...data.value };
+    if (componentType.value === "edit") {
+      const itemId = route.params.id as string;
+      await axios.post(`/api/clients/${itemId}`, { input: payload });
+    } else {
+      await axios.post(`/api/clients/`, { input: payload });
+    }
+    emit("on-success");
+  } catch (error) {
+    console.error("Save failed:", error);
   }
-  emit("on-success");
 };
 </script>
