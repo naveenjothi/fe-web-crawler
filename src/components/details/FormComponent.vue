@@ -16,10 +16,11 @@
         v-model="data.cin"
       />
       <InputComponent
-        label="Company Class"
-        id="companyClass"
+        label="ROC"
         wrapper-class="w-50"
-        v-model="data.companyClass"
+        type="number"
+        id="roC"
+        v-model="data.roC"
       />
     </div>
 
@@ -37,8 +38,20 @@
         v-model="data.subCategory"
       />
     </div>
-    <div class="w-50">
-      <InputComponent label="Address" id="address" v-model="data.address" />
+    <div class="w-50 d-flex gap-2">
+      <InputComponent
+        label="Address"
+        id="address"
+        v-model="data.address"
+        wrapper-class="w-75"
+      />
+      <InputComponent
+        label="Pin Code"
+        wrapper-class="w-25"
+        type="number"
+        id="pinCode"
+        v-model="data.pinCode"
+      />
     </div>
     <div class="w-50 d-flex gap-2">
       <InputComponent
@@ -71,6 +84,21 @@
         type="number"
         wrapper-class="w-50"
         v-model="data.paidUpCapital"
+      />
+    </div>
+    <div class="w-50 d-flex gap-2">
+      <InputComponent
+        label="Company Class"
+        id="companyClass"
+        wrapper-class="w-50"
+        v-model="data.companyClass"
+      />
+      <InputComponent
+        label="Registration Date"
+        id="registrationDate"
+        type="number"
+        wrapper-class="w-50"
+        v-model="data.registrationDate"
       />
     </div>
     <div class="w-50 d-flex justify-content-end">
