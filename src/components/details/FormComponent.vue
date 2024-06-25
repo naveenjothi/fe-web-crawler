@@ -85,7 +85,14 @@ import { PropType, defineComponent, toRefs } from "vue";
 import { IClient } from "../../models/client.model";
 import InputComponent from "../InputComponent.vue";
 import ButtonComponent from "../ButtonComponent.vue";
+import axios from "axios";
+import { useRoute } from "vue-router";
+
 defineComponent([InputComponent, ButtonComponent]);
+
+const emit = defineEmits(["on-success"]);
+
+const route = useRoute();
 
 const props = defineProps({
   data: {
@@ -119,6 +126,14 @@ const props = defineProps({
 const { data, componentType } = toRefs(props);
 
 const handleSave = async () => {
-  console.log(data.value);
+  const itemId = route.params.id as string;
+  const payload = { ...data.value };
+  if (componentType.value == "edit") {
+    delete payload.id;
+    await axios.post(`/api/clients/${itemId}`, { input: payload });
+  } else {
+    await axios.post(`/api/clients/`, { input: payload });
+  }
+  emit("on-success");
 };
 </script>

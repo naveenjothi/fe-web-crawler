@@ -55,8 +55,13 @@
     </div>
   </div>
   <div class="container bg-white overflow-hidden">
-    <FormComponent component-type="edit" :data="data" />
+    <FormComponent
+      component-type="edit"
+      :data="data"
+      @on-success="handleSuccess"
+    />
   </div>
+  <Toast />
 </template>
 
 <script setup lang="ts">
@@ -66,6 +71,10 @@ import { useRoute } from "vue-router";
 import { IClient } from "../models/client.model";
 import { startCase } from "lodash";
 import FormComponent from "../components/details/FormComponent.vue";
+
+import Toast from "primevue/toast";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 
 defineComponent([FormComponent]);
 
@@ -98,6 +107,15 @@ const breadCrumbItems = computed(() => [
     current: true,
   },
 ]);
+
+const handleSuccess = () => {
+  toast.add({
+    severity: "success",
+    summary: "Success Message",
+    detail: "Successfully updated!",
+    life: 3000,
+  });
+};
 </script>
 <style scoped>
 .custom-data:focus {
