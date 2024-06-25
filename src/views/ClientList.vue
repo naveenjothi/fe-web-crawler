@@ -1,9 +1,9 @@
 <template>
   <div class="container mt-5">
-    <h1 class="mb-4">Companies List</h1>
-    <ButtonComponent label="Show" @click="handleShowForm"
-      >Create List</ButtonComponent
-    >
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="mb-4">Companies List</h1>
+      <ButtonComponent @click="handleShowForm"> Create Client </ButtonComponent>
+    </div>
     <div class="mb-2">
       <div class="relative">
         <input
