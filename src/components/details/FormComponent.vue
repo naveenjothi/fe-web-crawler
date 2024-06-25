@@ -1,30 +1,17 @@
 <template>
   <div class="d-flex flex-column w-100 justify-content-between h-100 my-2">
-    <div class="w-50">
+    <div class="w-50 d-flex gap-2">
       <InputComponent
         v-model="data.companyName"
         label="Company Name"
         id="companyName"
-      />
-      <InputComponent v-model="data.roC" label="roC" id="roC" />
-    </div>
-    <div class="w-50">
-      <InputComponent
-        v-model="data.companyStatus"
-        label="Company Status"
-        id="companyStatus"
+        wrapper-class="w-50"
       />
       <InputComponent
-        v-model="data.companyActivity"
-        label="Company Activity"
-        id="companyActivity"
-      />
-    </div>
-    <div class="w-50">
-      <InputComponent
-        v-model="data.registrationDate"
-        label="Registration Date"
-        id="registrationDate"
+        v-model="data.roC"
+        label="roC"
+        id="roC"
+        wrapper-class="w-50"
       />
     </div>
     <div class="w-50 d-flex gap-2">
@@ -57,12 +44,38 @@
       />
     </div>
     <div class="w-50 d-flex gap-2">
-      <InputComponent label="Address" id="address" v-model="data.address" />
+      <InputComponent
+        v-model="data.companyStatus"
+        label="Company Status"
+        id="companyStatus"
+        wrapper-class="w-50"
+      />
+      <InputComponent
+        v-model="data.companyActivity"
+        label="Company Activity"
+        id="companyActivity"
+        wrapper-class="w-50"
+      />
+    </div>
+    <div class="w-50">
+      <InputComponent
+        v-model="data.registrationDate"
+        label="Registration Date"
+        id="registrationDate"
+      />
+    </div>
+    <div class="w-50 d-flex gap-2">
+      <InputComponent
+        label="Address"
+        wrapper-class="w-75"
+        id="address"
+        v-model="data.address"
+      />
       <InputComponent
         label="Pincode"
         id="pincode"
         type="number"
-        wrapper-class="w-50"
+        wrapper-class="w-25"
         v-model="data.pinCode"
       />
     </div>
