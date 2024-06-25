@@ -24,7 +24,7 @@ import { toRefs } from "vue";
 
 const props = defineProps({
   modelValue: {
-    type: String,
+    type: [String, Number],
     required: false,
     default: "",
   },

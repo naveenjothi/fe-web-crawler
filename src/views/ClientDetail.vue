@@ -60,7 +60,7 @@
         <InputComponent
           label="Company Name"
           id="companyName"
-          v-model="input?.companyName"
+          v-model="data.companyName"
         />
       </div>
       <div class="w-50 d-flex gap-2">
@@ -69,13 +69,13 @@
           wrapper-class="w-50"
           id="cin"
           :disabled="true"
-          v-model="input?.cin"
+          v-model="data.cin"
         />
         <InputComponent
           label="Company Class"
           id="companyClass"
           wrapper-class="w-50"
-          v-model="input?.companyClass"
+          v-model="data.companyClass"
         />
       </div>
 
@@ -84,34 +84,34 @@
           label="Category"
           wrapper-class="w-50"
           id="category"
-          v-model="input?.category"
+          v-model="data.category"
         />
         <InputComponent
           label="Sub Category"
           id="subCategory"
           wrapper-class="w-50"
-          v-model="input?.subCategory"
+          v-model="data.subCategory"
         />
       </div>
       <div class="w-50">
-        <InputComponent label="Address" id="address" v-model="input?.address" />
+        <InputComponent label="Address" id="address" v-model="data.address" />
       </div>
       <div class="w-50 d-flex gap-2">
         <InputComponent
           label="State"
           wrapper-class="w-50"
           id="state"
-          v-model="input?.state"
+          v-model="data.state"
         />
         <InputComponent
           label="Country"
           id="country"
           wrapper-class="w-50"
-          v-model="input?.country"
+          v-model="data.country"
         />
       </div>
       <div class="w-50">
-        <InputComponent label="Managed By" id="email" v-model="input?.email" />
+        <InputComponent label="Managed By" id="email" v-model="data.email" />
       </div>
       <div class="w-50 d-flex gap-2">
         <InputComponent
@@ -119,14 +119,14 @@
           wrapper-class="w-50"
           type="number"
           id="authorisedCapital"
-          v-model="input?.authorisedCapital"
+          v-model="data.authorisedCapital"
         />
         <InputComponent
           label="Paidup Capital"
           id="paidUpCapital"
           type="number"
           wrapper-class="w-50"
-          v-model="input?.paidUpCapital"
+          v-model="data.paidUpCapital"
         />
       </div>
       <div class="w-50 d-flex justify-content-end">
@@ -160,8 +160,24 @@ onMounted(async () => {
 
 defineComponent([InputComponent, ButtonComponent]);
 
-const data = ref<IClient | null>(null);
-const input = ref<IClient | null>(null);
+const data = ref<IClient>({
+  companyName: "",
+  cin: "",
+  companyClass: "",
+  category: "",
+  subCategory: "",
+  address: "",
+  state: "",
+  country: "",
+  email: "",
+  authorisedCapital: 0,
+  paidUpCapital: 0,
+  roC: "",
+  companyStatus: "",
+  companyActivity: "",
+  registrationDate: "",
+  pinCode: "",
+});
 
 const getStartCase = (value: string) => {
   return startCase(value.toLowerCase());
@@ -185,17 +201,17 @@ const handleSave = async () => {
 };
 </script>
 <style scoped>
-.custom-input:focus {
+.custom-data:focus {
   --tw-border-opacity: 1;
   border-color: rgb(147 51 234 / var(--tw-border-opacity));
 }
 
-.custom-input::placeholder {
+.custom-data::placeholder {
   color: #d1d5db; /* Equivalent to placeholder:text-gray-300 */
   text-transform: capitalize; /* Equivalent to placeholder:capitalize */
 }
 
-.custom-input:disabled {
+.custom-data:disabled {
   opacity: 0.75; /* Equivalent to disabled:opacity-75 */
 }
 

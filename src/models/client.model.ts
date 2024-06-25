@@ -1,5 +1,5 @@
 export interface IClient {
-  id: number;
+  id?: number;
   companyName: string;
   roC: string;
   companyStatus: string;
@@ -16,5 +16,5 @@ export interface IClient {
   country: string;
   address: string;
   email: string;
-  isDeleted: boolean;
+  isDeleted?: boolean;
 }
