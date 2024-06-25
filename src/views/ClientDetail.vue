@@ -1,5 +1,5 @@
 <template>
-  <div class="container bg-white mt-5">
+  <div v-if="!loading" class="container bg-white mt-5">
     <nav aria-label="Breadcrumb">
       <ol class="breadcrumb">
         <li
@@ -54,7 +54,16 @@
       </div>
     </div>
   </div>
-  <div class="container bg-white overflow-hidden">
+  <div
+    v-if="loading"
+    class="d-flex justify-content-center align-items-center"
+    style="height: 300px"
+  >
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <div v-if="!loading" class="container bg-white">
     <FormComponent
       component-type="edit"
       :data="data"
@@ -79,17 +88,27 @@ const toast = useToast();
 defineComponent([FormComponent]);
 
 onMounted(async () => {
+  loading.value = true;
   const route = useRoute();
   const itemId = route.params.id as string;
   try {
     const response = await axios.get<IClient>(`/api/clients/${itemId}`);
     data.value = response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error fetching item details:", error);
+    toast.add({
+      severity: "error",
+      summary: "Failed Fetching Records",
+      detail: error?.message,
+      life: 3000,
+    });
+  } finally {
+    loading.value = false;
   }
 });
 
 const data = ref<IClient>();
+const loading = ref<boolean>(false);
 
 const getStartCase = (value: string) => {
   return startCase(value.toLowerCase());
