@@ -58,11 +58,11 @@
       />
     </div>
     <div :class="wrapperClasses">
-      <InputComponent
+      <DatePickerComponent
         v-model="data.registrationDate"
         label="Registration Date"
-        id="registrationDate"
-        wrapper-class="w-100"
+        class="w-100"
+        placeholder="Registration Date"
       />
     </div>
     <div :class="wrapperClasses">
@@ -136,6 +136,7 @@ import { useRoute } from "vue-router";
 
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
+import DatePickerComponent from "../DatePickerComponent.vue";
 
 const emit = defineEmits(["on-success"]);
 const route = useRoute();
