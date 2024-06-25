@@ -118,7 +118,7 @@
         v-model="data.paidUpCapital"
       />
     </div>
-    <div class="w-50 d-flex justify-content-end">
+    <div :class="[...wrapperClasses, 'justify-content-end']">
       <ButtonComponent class="w-25 rounded" @click.prevent="handleSave"
         >Save</ButtonComponent
       >
